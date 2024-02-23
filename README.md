@@ -22,4 +22,4 @@ echo "_____~~__________\/__/_______\/__/_______\/__/____";
 |-----------------|------------------------------------------------------------|---------------------------------------------|
 | `checkheaders.py` | Скрипт для проверки отсутствующих заголовков безопасности на заданных доменах. | `./checkheaders.py -d $(cat ./urls.txt)` |
 | `cipher.py`     | Скрипт для проверки поддерживаемых шифров на серверах, используя данные с ciphersuite.info. | `nmap -p443 --script ssl-enum-ciphers $(cat ./domains.txt) -oX - \| python ciphers.py` |
-| `dubheaders.sh` | Bash скрипт для обнаружения дублирующихся HTTP заголовков на указанном URL. | `./dubheaders.sh https://example.com`       |
+| `dubheaders.sh` | Bash скрипт для обнаружения дублирующихся HTTP заголовков на указанном URL. | `for i in (cat ./urls.txt) echo "$i"; ./dubheaders.sh "$i"; end \| tee -a dubheaders.txt` |
