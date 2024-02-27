@@ -24,3 +24,4 @@ echo "_____~~__________\/__/_______\/__/_______\/__/____";
 | `cipher.py`     | Проверка поддерживаемых шифров на серверах, используя данные с ciphersuite.info. | `nmap -p443 --script ssl-enum-ciphers $(cat ./domains.txt) -oX - \| python ciphers.py` |
 | `dubheaders.sh` | Обнаружения дублирующихся HTTP заголовков на указанном URL. | `for i in (cat ./urls.txt) echo "$i"; ./dubheaders.sh "$i"; end \| tee -a dubheaders.txt` |
 | `encrypt.sh` | Зашифровать всеми ключами из директории ~/Keys файл и вызвать HOOK | `./encrypt.sh ./report.docx` |
+| `nmap2ips.py` | Xml nmap файл в формат вида DOMAIN:PORT | `nmap -F -oX - google.com \| ./nmap2ips.py` |
