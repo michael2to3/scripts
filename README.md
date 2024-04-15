@@ -20,9 +20,10 @@ echo "_____~~__________\/__/_______\/__/_______\/__/____";
 
 | Имя скрипта     | Описание                                                   | Пример использования                       |
 |-----------------|------------------------------------------------------------|---------------------------------------------|
-| `checkheaders.py` | Проверка отсутствующих заголовков безопасности на заданных доменах. | `./checkheaders.py -d $(cat ./urls.txt)` |
-| `cipher.py`     | Проверка поддерживаемых шифров на серверах, используя данные с ciphersuite.info. | `nmap -p443 --script ssl-enum-ciphers $(cat ./domains.txt) -oX - \| python ciphers.py` |
-| `dubheaders.sh` | Обнаружения дублирующихся HTTP заголовков на указанном URL. | `for i in (cat ./urls.txt) echo "$i"; ./dubheaders.sh "$i"; end \| tee -a dubheaders.txt` |
-| `encrypt.sh` | Зашифровать всеми ключами из директории ~/Keys файл и вызвать HOOK | `./encrypt.sh ./report.docx` |
-| `nmap2ips.py` | Xml nmap файл в формат вида DOMAIN:PORT | `nmap -n -F -oX - google.com \| ./nmap2ips.py` |
-| `signAndroidApp.sh` | Подписать apk файл и выровнять файлы ресурсов | `./signAndroidApp.sh ./app/app-release-unsigned.apk ./output/`
+| `checkheaders.py`         | Проверка отсутствующих заголовков безопасности на заданных доменах.               | `./checkheaders.py -d $(cat ./urls.txt)` |
+| `cipher.py`               | Проверка поддерживаемых шифров на серверах, используя данные с ciphersuite.info.  | `nmap -p443 --script ssl-enum-ciphers $(cat ./domains.txt) -oX - \| python ciphers.py` |
+| `dubheaders.sh`           | Обнаружения дублирующихся HTTP заголовков на указанном URL.                       | `for i in (cat ./urls.txt) echo "$i"; ./dubheaders.sh "$i"; end \| tee -a dubheaders.txt` |
+| `encrypt.sh`              | Зашифровать всеми ключами из директории ~/Keys файл и вызвать HOOK                | `./encrypt.sh ./report.docx` |
+| `nmap2ips.py`             | Xml nmap файл в формат вида DOMAIN:PORT                                           | `nmap -n -F -oX - google.com \| ./nmap2ips.py` |
+| `signAndroidApp.sh`       | Подписать apk файл и выровнять файлы ресурсов                                     | `./signAndroidApp.sh ./app/app-release-unsigned.apk ./output/` |
+| `ld_preload_stdinout.c`   | Незаметно слушает stdin/stdout в /tmp/file.log                                    | `LD_PRELOAD=./ld_preload_stdinout.so bash` |
