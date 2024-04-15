@@ -27,3 +27,4 @@ echo "_____~~__________\/__/_______\/__/_______\/__/____";
 | `nmap2ips.py`             | Xml nmap файл в формат вида DOMAIN:PORT                                           | `nmap -n -F -oX - google.com \| ./nmap2ips.py` |
 | `signAndroidApp.sh`       | Подписать apk файл и выровнять файлы ресурсов                                     | `./signAndroidApp.sh ./app/app-release-unsigned.apk ./output/` |
 | `ld_preload_stdinout.c`   | Незаметно слушает stdin/stdout в /tmp/file.log                                    | `LD_PRELOAD=./ld_preload_stdinout.so bash` |
+| `jwt2john.py`             | Подготовливает jwt для брута john                                                 | `./jwt2john.py JWT` |
