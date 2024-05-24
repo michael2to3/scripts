@@ -1,6 +1,6 @@
-# Набор инструментов
+# Scripts
 
-Этот репозиторий содержит набор простых скриптов, предназначенных для использования в различных целях
+Этот репозиторий содержит набор простых скриптов, предназначенных для использования в различных целях.
 
 ```bash 
 echo "__________________________________________________";
@@ -16,15 +16,114 @@ echo "____\::/__/______/:/__/_____\::/__/______/:/__/___";
 echo "_____~~__________\/__/_______\/__/_______\/__/____";
 ```
 
-## Скрипты
+## Оглавление
 
-| Имя скрипта     | Описание                                                   | Пример использования                       |
-|-----------------|------------------------------------------------------------|---------------------------------------------|
-| `checkheaders.py`         | Проверка отсутствующих заголовков безопасности на заданных доменах.               | `./checkheaders.py -d $(cat ./urls.txt)` |
-| `cipher.py`               | Проверка поддерживаемых шифров на серверах, используя данные с ciphersuite.info.  | `nmap -p443 --script ssl-enum-ciphers $(cat ./domains.txt) -oX - \| python ciphers.py` |
-| `dubheaders.sh`           | Обнаружения дублирующихся HTTP заголовков на указанном URL.                       | `for i in (cat ./urls.txt) echo "$i"; ./dubheaders.sh "$i"; end \| tee -a dubheaders.txt` |
-| `encrypt.sh`              | Зашифровать всеми ключами из директории ~/Keys файл и вызвать HOOK                | `./encrypt.sh ./report.docx` |
-| `nmap2ips.py`             | Xml nmap файл в формат вида DOMAIN:PORT                                           | `nmap -n -F -oX - google.com \| ./nmap2ips.py` |
-| `signAndroidApp.sh`       | Подписать apk файл и выровнять файлы ресурсов                                     | `./signAndroidApp.sh ./app/app-release-unsigned.apk ./output/` |
-| `ld_preload_stdinout.c`   | Незаметно слушает stdin/stdout в /tmp/file.log                                    | `LD_PRELOAD=./ld_preload_stdinout.so bash` |
-| `jwt2john.py`             | Подготовливает jwt для брута john                                                 | `./jwt2john.py JWT` |
+1. [checkheaders.py](#checkheaderspy)
+2. [cipher.py](#cipherpy)
+3. [dubheaders.sh](#dubheaderssh)
+4. [encrypt.sh](#encryptsh)
+5. [nmap2ips.py](#nmap2ipspy)
+6. [signAndroidApp.sh](#signandroidappsh)
+7. [ld_preload_stdinout.c](#ld_preload_stdinoutc)
+8. [jwt2john.py](#jwt2johnpy)
+9. [fmap.sh](#fmapsh)
+10. [bbot.sh](#bbotsh)
+
+### checkheaders.py
+
+Проверка отсутствующих заголовков безопасности на заданных доменах.
+
+Пример использования:
+```bash
+./checkheaders.py -d $(cat ./urls.txt)
+```
+
+### cipher.py
+
+Проверка на криптостойкие шифры на серверах, используя данные с ciphersuite.info.
+
+Пример использования:
+```bash
+nmap -p443 --script ssl-enum-ciphers $(cat ./domains.txt) -oX - | python ciphers.py
+```
+
+### dubheaders.sh
+
+Обнаружение дублирующихся HTTP заголовков на указанном URL.
+
+Пример использования:
+```bash
+for i in $(cat ./urls.txt); do echo "$i"; ./dubheaders.sh "$i"; done | tee -a dubheaders.txt
+```
+
+### encrypt.sh
+
+Зашифровать всеми ключами из директории ~/Keys файл и вызвать HOOK.
+
+Пример использования:
+```bash
+./encrypt.sh ./report.docx
+```
+
+### nmap2ips.py
+
+Преобразование XML nmap файла в формат вида DOMAIN:PORT.
+
+Пример использования:
+```bash
+nmap -n -F -oX - google.com | ./nmap2ips.py
+```
+
+### signAndroidApp.sh
+
+Подписание apk файла и выравнивание файлов ресурсов.
+
+Пример использования:
+```bash
+./signAndroidApp.sh ./app/app-release-unsigned.apk ./output/
+```
+
+### ld_preload_stdinout.c
+
+Незаметное прослушивание stdin/stdout и запись в /tmp/file.log.
+
+Пример использования:
+```bash
+LD_PRELOAD=./ld_preload_stdinout.so bash
+```
+
+### jwt2john.py
+
+Подготовка jwt для брутфорса с помощью John the Ripper.
+
+Пример использования:
+```bash
+./jwt2john.py JWT
+```
+
+### fmap.sh
+
+Быстрая альтернатива nmap для сканирования всех портов.
+
+Пример использования:
+```bash
+fmap -sV -sC -T5 127.1
+```
+
+### bbot.sh
+
+Запуск bbot с предустановленными зависимостями.
+
+Пример использования:
+```bash
+./bbot.sh -h
+```
+
+По умолчанию используется репозиторий `dockeronfullpc/fat-bbot`. Рекомендуется использовать тег `dev`, так как он включает множество исправлений.
+
+Если вы хотите собрать свой образ:
+```bash
+cd ./fat-bbot/
+docker build -t fat-bbot .
+docker run fat-bbot --help
+```
