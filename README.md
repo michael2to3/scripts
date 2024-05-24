@@ -16,19 +16,6 @@ echo "____\::/__/______/:/__/_____\::/__/______/:/__/___";
 echo "_____~~__________\/__/_______\/__/_______\/__/____";
 ```
 
-## Оглавление
-
-1. [checkheaders.py](#checkheaderspy)
-2. [cipher.py](#cipherpy)
-3. [dubheaders.sh](#dubheaderssh)
-4. [encrypt.sh](#encryptsh)
-5. [nmap2ips.py](#nmap2ipspy)
-6. [signAndroidApp.sh](#signandroidappsh)
-7. [ld_preload_stdinout.c](#ld_preload_stdinoutc)
-8. [jwt2john.py](#jwt2johnpy)
-9. [fmap.sh](#fmapsh)
-10. [bbot.sh](#bbotsh)
-
 ### checkheaders.py
 
 Проверка отсутствующих заголовков безопасности на заданных доменах.
