@@ -1,0 +1,19 @@
+{
+  "name": "scripts",
+  "version": "1.0.0",
+  "description": "Этот репозиторий содержит набор скриптов для выполнения различных задач, таких как проверка безопасности, шифрование файлов, сканирование портов и другие",
+  "main": "js2json.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.3.0",
+    "eslint": "9.x",
+    "globals": "^15.3.0"
+  },
+  "dependencies": {
+    "safe-eval": "^0.4.1"
+  }
+}
