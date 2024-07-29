@@ -22,7 +22,7 @@ for key in "$KEY_DIR"/*.*; do
     GPG_CMD="$GPG_CMD -r $KEY_ID"
 done
 
-GPG_CMD="$GPG_CMD  -o $FILE_OUT -e $FILE_TO_ENCRYPT"
+GPG_CMD="$GPG_CMD  -o '$FILE_OUT' -e '$FILE_TO_ENCRYPT'"
 
 echo "Running command: $GPG_CMD"
 eval "$GPG_CMD"
