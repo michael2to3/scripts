@@ -1,0 +1,36 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "debian/bookworm64"
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.gui = true
+    vb.memory = 8192
+    vb.cpus = 8
+  end
+
+  config.vm.network "forwarded_port", guest: 3389, host: 3389
+
+  config.vm.provision "shell", inline: <<-SHELL
+    sudo apt-get update
+    sudo apt-get upgrade -y
+
+    sudo apt-get install -y xfce4 xfce4-goodies xorg dbus-x11 xrdp curl wget git htop neovim resolvconf
+    sudo systemctl enable xrdp
+    sudo systemctl start xrdp
+
+    sudo dpkg -i /vagrant/program.deb || sudo apt-get install -f -y
+
+    sudo cp /vagrant/cert.pem /usr/local/share/ca-certificates/user-ca-cert.crt
+    sudo chmod 644 /usr/local/share/ca-certificates/user-ca-cert.crt
+    update-ca-certificate
+
+    sudo apt-get install -y wireguard
+
+    sudo cp /vagrant/vpn.conf /etc/wireguard/wg0.conf
+    sudo chmod 600 /etc/wireguard/wg0.conf
+
+    sudo wg-quick up wg0
+
+    sudo systemctl enable wg-quick@wg0
+    echo 'vagrant:vagrant' | sudo chpasswd
+  SHELL
+end
