@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  keycloak:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8066:8080"
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KC_PROXY=edge
+    volumes:
+      - ./mitmproxy-ca-cert.pem:/usr/local/share/ca-certificates/mitmproxy-ca-cert.pem:ro
+      - ./wg.conf:/etc/wireguard/wg0.conf:ro
+      - ./keycloak-multifactor-spi-jar-with-dependencies.jar:/opt/keycloak/providers/keycloak-multifactor-spi-jar-with-dependencies.jar:ro
+      - ./data:/opt/keycloak/standalone/data
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
