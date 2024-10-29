@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  telegram:
+    build: .
+    environment:
+      - VNC_PW=admin
+      - VNC_RESOLUTION=1024x768
+    ports:
+      - ":5901"
+      - ":6901"
+    volumes:
+      - .:/app
+    user: "2000:3000"
