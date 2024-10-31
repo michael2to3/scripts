@@ -114,6 +114,7 @@ def main():
         focus_telegram()
         check_wait_buttons()
         clicked = click_download_buttons()
+        focus_telegram()
         if not clicked:
             scroll_up()
         time.sleep(5)
