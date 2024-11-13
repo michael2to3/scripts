@@ -71,17 +71,18 @@
 
 			const password = document.getElementById('password').value;
 
-			fetch('/', {
+			fetch('/check-password', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({password})
+				body: JSON.stringify({'password': password})
 			})
-				.then(response => response.json())
+				.then(response => response.text())
 				.then(data => {
 					if (data.success) {
-						alert('Success! The key was found.');
+						alert('Success!');
+						window.location = 'https://ya.ru';
 					} else {
 						alert('Password check failed. Try again.');
 					}
