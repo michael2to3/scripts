@@ -48,7 +48,6 @@ def check_password():
         result = "OK" if "KEY FOUND!" in output else "KO"
         results_file.write(f"{result}: {entered_password}\n")
         results_file.flush()
-        close()
         return result
     except subprocess.TimeoutExpired:
         results_file.write(f"TI: {entered_password}\n")
@@ -64,10 +63,6 @@ def index():
 def cleanup():
     wordlist_file.close()
     results_file.close()
-
-def close():
-    if close_after_success:
-        sys.exit(0)
 
 
 if __name__ == "__main__":

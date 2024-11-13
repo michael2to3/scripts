@@ -1,20 +1,29 @@
 #!/bin/bash
 
-python3 app.py "$@"
+python3 app.py "$@" &
+app_pid=$!
 
-exit_code=$?
+file_check_interval=2
 
-if [ $exit_code -eq 0 ]; then
-    pids=$(pgrep aireplay-ng)
+while true; do
+    if grep -q "OK" results.txt; then
+        echo "Finded 'OK' in results.txt"
 
-    if [ -z "$pids" ]; then
-        echo "Process aireplay-ng not found."
+        kill -SIGTERM $app_pid
+        wait $app_pid 2>/dev/null
+
+        pids=$(pgrep aireplay-ng)
+        if [ -z "$pids" ]; then
+            echo "Process 'aireplay-ng' not found."
+        else
+            for pid in $pids; do
+                kill -SIGTERM $pid
+                echo "Process $pid killed."
+            done
+        fi
+
+        break
     else
-        for pid in $pids; do
-            kill -SIGTERM $pid
-            echo "Send SIGTERM to $pid"
-        done
+        sleep $file_check_interval
     fi
-else
-    echo "Exit code: $exit_code"
-fi
+done
