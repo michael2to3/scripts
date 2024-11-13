@@ -35,11 +35,11 @@ def check_password():
             ],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            stderr=sys.stderr,
             timeout=10,
         )
-
-        if "KEY FOUND!" in result.stdout.decode():
+        output = result.stdout.decode()
+        print(output)
+        if "KEY FOUND!" in output:
             return "OK"
         return "KO"
     except subprocess.TimeoutExpired:
