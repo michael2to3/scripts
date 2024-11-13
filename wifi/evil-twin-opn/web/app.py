@@ -4,9 +4,8 @@ import sys
 from flask import Flask, redirect, render_template, request, url_for
 
 app = Flask(__name__)
-is_debug = len(sys.argv) != 4
+is_debug = len(sys.argv) != 3
 bssid = str(sys.argv[1])
-close_after_success = bool(sys.argv[3])
 
 wordlist_file = open("wordlist.txt", "w")
 results_file = open("results.txt", "a")
