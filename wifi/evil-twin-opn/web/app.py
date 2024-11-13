@@ -8,14 +8,11 @@ is_debug = len(sys.argv) != 3
 bssid = str(sys.argv[1])
 
 
-@app.route("/gen_204")
-def gen_204():
+# android: generate_204 gen_204
+# ios: /hotspot-detect.html
+@app.errorhandler(404)
+def page_not_found(e):
     return redirect(url_for("index"))
-
-
-@app.route("/hotspot-detect.html")
-def hotspot_detect():
-    return render_template("hotspot-detect.html")
 
 
 @app.route("/", methods=["GET", "POST"])
