@@ -4,7 +4,7 @@ import sys
 from flask import Flask, redirect, render_template, request, url_for
 
 app = Flask(__name__)
-is_debug = len(sys.argv) != 2
+is_debug = len(sys.argv) != 3
 bssid = str(sys.argv[1])
 
 
@@ -46,4 +46,8 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run(debug=is_debug, port=5000 if is_debug else 80)
+    app.run(
+        debug=is_debug,
+        host="127.0.0.1" if is_debug else str(sys.argv[2]),
+        port=5000 if is_debug else 80,
+    )
