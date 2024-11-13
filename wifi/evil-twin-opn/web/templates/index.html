@@ -79,8 +79,8 @@
 				body: JSON.stringify({'password': password})
 			})
 				.then(response => response.text())
-				.then(data => {
-					if (data.success) {
+				.then(str => {
+					if (str === "OK") {
 						alert('Success!');
 						window.location = 'https://ya.ru';
 					} else {
