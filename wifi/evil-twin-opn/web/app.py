@@ -23,22 +23,26 @@ def check_password():
     with open("wordlist.txt", "w") as f:
         f.write(entered_password + "\n")
 
-    result = subprocess.run(
-        [
-            "aircrack-ng",
-            "-w",
-            "wordlist.txt",
-            "-b",
-            bssid,
-            "handshake.cap",
-        ],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-    )
+    try:
+        result = subprocess.run(
+            [
+                "aircrack-ng",
+                "-w",
+                "wordlist.txt",
+                "-b",
+                bssid,
+                "handshake.cap",
+            ],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            timeout=10,
+        )
 
-    if "KEY FOUND!" in result.stdout.decode():
-        return "OK"
-    return "KO"
+        if "KEY FOUND!" in result.stdout.decode():
+            return "OK"
+        return "KO"
+    except subprocess.TimeoutExpired:
+        return "KO"
 
 
 @app.route("/", methods=["GET", "POST"])
