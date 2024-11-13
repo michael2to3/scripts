@@ -35,6 +35,7 @@ def check_password():
             ],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
+            stderr=sys.stderr,
             timeout=10,
         )
 
