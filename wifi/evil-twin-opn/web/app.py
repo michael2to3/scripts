@@ -4,8 +4,9 @@ import sys
 from flask import Flask, redirect, render_template, request, url_for
 
 app = Flask(__name__)
-is_debug = len(sys.argv) != 3
+is_debug = len(sys.argv) != 4
 bssid = str(sys.argv[1])
+close_after_success = bool(sys.argv[3])
 
 wordlist_file = open("wordlist.txt", "w")
 results_file = open("results.txt", "a")
@@ -47,6 +48,7 @@ def check_password():
         result = "OK" if "KEY FOUND!" in output else "KO"
         results_file.write(f"{result}: {entered_password}\n")
         results_file.flush()
+        close()
         return result
     except subprocess.TimeoutExpired:
         results_file.write(f"TI: {entered_password}\n")
@@ -62,6 +64,10 @@ def index():
 def cleanup():
     wordlist_file.close()
     results_file.close()
+
+def close():
+    if close_after_success:
+        sys.exit(0)
 
 
 if __name__ == "__main__":
