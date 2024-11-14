@@ -1,0 +1,50 @@
+Vagrant.configure("2") do |config|
+  domain_name = "win.local"
+  domain_admin_password = "SecureP@ssw0rd"
+
+  config.vm.box = "StefanScherer/windows_2019"
+  config.vm.hostname = "windows2019-vpn"
+  config.vm.network "forwarded_port", guest: 51820, host: 51820, protocol: "udp"
+  config.vm.provider "virtualbox" do |v|
+    v.gui = true
+    v.memory = "2048"
+    v.cpus = 8
+  end
+
+  config.vm.provision "shell", inline: <<-SHELL
+    $certPath = "C:\\vagrant\\cert.pem"
+    Import-Certificate -FilePath $certPath -CertStoreLocation Cert:\\LocalMachine\\Root
+
+    Invoke-WebRequest -Uri https://download.wireguard.com/windows-client/wireguard-installer.exe -OutFile C:\\vagrant\\wireguard-installer.exe
+    Start-Process "C:\\vagrant\\wireguard-installer.exe" -ArgumentList '/install', '/quiet' -Wait
+
+    $configDir = "C:\\Program Files\\WireGuard\\Configurations"
+    if (!(Test-Path -Path $configDir)) {
+        New-Item -Path $configDir -ItemType Directory
+    }
+
+    $vpnConfigPath = "C:\\vagrant\\vpn.conf"
+    Copy-Item $vpnConfigPath "$configDir\\vpn.conf"
+
+
+
+    $domainName = "#{domain_name}"
+    $domainAdminPassword = "#{domain_admin_password}"
+
+    $adminPassword = ConvertTo-SecureString "$domainAdminPassword" -AsPlainText -Force
+    Set-LocalUser -Name "Administrator" -Password $adminPassword
+
+    Install-WindowsFeature AD-Domain-Services -IncludeManagementTools
+    Install-WindowsFeature adfs-federation -IncludeManagementTools
+    New-SelfSignedCertificate -DnsName "adfs.$domainName" -CertStoreLocation "Cert:\\LocalMachine\\My"
+
+
+    $securePassword = ConvertTo-SecureString $domainAdminPassword -AsPlainText -Force
+    Install-ADDSForest -DomainName $domainName -SafeModeAdministratorPassword $securePassword -InstallDNS -Force
+  SHELL
+  #     To enable vpn:
+  #     wireguard /installtunnelservice $configDir\vpn.conf
+
+  config.vm.provision "file", source: "./cert.pem", destination: "C:\\vagrant\\cert.pem"
+  config.vm.provision "file", source: "./vpn.conf", destination: "C:\\vagrant\\vpn.conf"
+end

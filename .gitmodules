@@ -1,0 +1,6 @@
+[submodule "wifi/EAP_buster"]
+	path = wifi/EAP_buster
+	url = git@github.com:blackarrowsec/EAP_buster.git
+[submodule "wifi/wacker"]
+	path = wifi/wacker
+	url = git@github.com:blunderbuss-wctf/wacker.git
