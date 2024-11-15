@@ -5,9 +5,9 @@ app_pid=$!
 
 file_check_interval=2
 
-trap 'exit' SIGINT
+trap 'cleanup_and_exit' SIGINT
 
-function exit() {
+function cleanup_and_exit() {
     kill -SIGTERM $app_pid
     wait $app_pid 2>/dev/null
 
