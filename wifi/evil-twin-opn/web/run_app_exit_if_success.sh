@@ -20,6 +20,7 @@ function exit() {
             echo "Process $pid killed."
         done
     fi
+    exit 0
 }
 
 while true; do
