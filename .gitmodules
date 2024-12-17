@@ -4,3 +4,6 @@
 [submodule "wifi/wacker"]
 	path = wifi/wacker
 	url = git@github.com:blunderbuss-wctf/wacker.git
+[submodule "jwtcrack"]
+	path = jwtcrack
+	url = https://github.com/Sjord/jwtcrack.git

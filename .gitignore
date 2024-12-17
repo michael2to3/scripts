@@ -740,3 +740,5 @@ $RECYCLE.BIN/
 *.priv
 
 # End of https://www.toptal.com/developers/gitignore/api/certificates
+
+.DS_Store

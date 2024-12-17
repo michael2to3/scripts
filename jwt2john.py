@@ -19,6 +19,6 @@ def jwt2john(jwt):
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: %s JWT" % sys.argv[0])
-    else:
-        john = jwt2john(sys.argv[1])
-        print(john)
+        exit(1)
+    john = jwt2john(sys.argv[1])
+    print(john)
