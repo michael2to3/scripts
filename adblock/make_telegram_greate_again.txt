@@ -4,3 +4,5 @@ web.telegram.org###folders-tabs > div.rp.menu-horizontal-div-item .badge-gray
 web.telegram.org##a.row-big.chatlist-chat-bigger.chatlist-chat.rp.hover-effect.row-clickable.row-with-padding.no-wrap.row .dialog-subtitle-badge-reaction
 
 web.telegram.org##.empty-bubble-placeholder-line.media-sticker-wrapper.empty-bubble-placeholder-sticker
+
+##.active.item-main.sidebar-slider-item.tabs-tab .stories-list
