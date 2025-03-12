@@ -2,15 +2,14 @@ import sys
 
 global get_token, inject_token
 
-state["realm"] = "XXXX"
-
 
 def get_token():
+    import re
+
     url = messageInfo.getUrl()
-    if (
-        url
-        and f"/realms/{state["realm"]}/protocol/openid-connect/token" in url.toString()
-    ):
+    paths = [".*/realms/.*/protocol/openid-connect/token"]
+    if any(re.match(path, url.toString()) is not None for path in paths):
+        print(url)
         response_bytes = messageInfo.getResponse()
         analyzed_response = helpers.analyzeResponse(response_bytes)
         body_offset = analyzed_response.getBodyOffset()
@@ -39,15 +38,10 @@ def inject_token():
     body = messageInfo.getRequest()[request_info.getBodyOffset() :]
 
     headers = request_info.getHeaders()
-    is_found_header = False
     for h in headers:
         if h.startswith("Authorization:"):
-            is_found_header = True
             headers.remove(h)
             break
-
-    if not is_found_header:
-        return
 
     auth_header = "Authorization: Bearer {}".format(last_token)
     headers.add(auth_header)
@@ -65,13 +59,15 @@ def process_request():
     global inject_token
     request_info = helpers.analyzeRequest(messageInfo)
     headers = request_info.getHeaders()
+    triggers = ("Authorization: XXX", "User-Agent: 13337")
     if toolFlag in (
         callbacks.TOOL_REPEATER,
         callbacks.TOOL_SCANNER,
         callbacks.TOOL_INTRUDER,
+        callbacks.TOOL_EXTENDER,
     ) or (
         toolFlag == callbacks.TOOL_PROXY
-        and any("Authorization: XXX" in i for i in headers)
+        and any(j in i for j in triggers for i in headers)
     ):
         inject_token()
 

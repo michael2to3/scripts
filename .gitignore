@@ -742,3 +742,5 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/certificates
 
 .DS_Store
+/NDA/
+*.session
