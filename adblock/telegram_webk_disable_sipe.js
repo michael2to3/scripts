@@ -7,13 +7,22 @@
 // @grant        none
 // ==/UserScript==
 
-
 (function () {
   'use strict';
 
-  const THRESHOLD = 10;
-  let startX = 0;
-  let startY = 0;
+  const css = `
+    html, body, #telegramWebAppRoot, div {
+      touch-action: pan-y !important;
+      overscroll-behavior-x: contain !important;
+    }
+  `;
+  const style = document.createElement('style');
+  style.textContent = css;
+  document.head.appendChild(style);
+
+  const THRESHOLD = 12;
+  let startX = 0,
+      startY = 0;
 
   const onTouchStart = (e) => {
     if (e.touches.length !== 1) return;
