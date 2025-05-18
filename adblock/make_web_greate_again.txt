@@ -10,4 +10,5 @@ web.telegram.org##.active.item-main.sidebar-slider-item.tabs-tab .stories-list
 web.telegram.org##.is-visible.rp.bubbles-go-reaction.bubbles-go-mention.chat-secondary-button.bubbles-corner-button.z-depth-1.btn-corner.btn-circle
 web.telegram.org##.active.is-muted.row-big.chatlist-chat-bigger.chatlist-chat.rp.hover-effect.row-clickable.no-wrap.row .reaction-badge
 
-ozon.ru##.vue-portal-target
+#ozon.ru##.vue-portal-target
+ozon.ru##.g1aa_35 .aga2_35
